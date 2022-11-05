@@ -20,7 +20,10 @@ public class DebugPositionChanger : MonoBehaviour
         {
             Debug.Log("Changing var");
             lastChanged = Time.time;
-            NetworkSyncer.Get().diverPosition.Value = new Vector3(Random.value, Random.value, Random.value);
+            NetworkSyncer.Get().diverPosition.Value = new Vector3(
+                (Random.value - 0.5f) * 2,
+                (Random.value - 0.5f) * 2,
+                (Random.value - 0.5f) * 2);
         }
     }
 }

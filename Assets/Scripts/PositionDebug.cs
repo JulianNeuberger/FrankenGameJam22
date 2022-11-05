@@ -16,6 +16,9 @@ public class PositionDebug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        label.text = NetworkSyncer.Get().diverPosition.Value.ToString();
+        if(NetworkSyncer.Get())
+        {
+            label.text = NetworkSyncer.Get().diverPosition.Value.ToString();
+        }
     }
 }
