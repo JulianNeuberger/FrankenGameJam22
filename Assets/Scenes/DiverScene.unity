@@ -235,25 +235,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1522033906 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7109815286316632009, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
-  m_PrefabInstance: {fileID: 340726070833235999}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1522033908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522033906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7402247e23430e43a7b92ee949e5844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldownSeconds: 10
-  energyCost: 0
 --- !u!1 &1537760104
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1537760105}
+  - component: {fileID: 1537760112}
   - component: {fileID: 1537760107}
   - component: {fileID: 1537760110}
   - component: {fileID: 1537760106}
@@ -373,6 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startState: {fileID: 1537760106}
+  currentState: {fileID: 0}
 --- !u!114 &1537760111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +371,18 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
+--- !u!114 &1537760112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537760104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccdd1231495d79040ac3b43bce80a48b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1906014666
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +551,14 @@ PrefabInstance:
     - target: {fileID: 3316010883418468530, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
       propertyPath: inactiveColor.r
       value: 0.41509432
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220061534430108646, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296147702890596709, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
+      propertyPath: cooldownSeconds
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9056758772868023054, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
       propertyPath: m_Materials.Array.data[0]
