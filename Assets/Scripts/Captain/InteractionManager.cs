@@ -5,31 +5,37 @@ using UnityEngine;
 public class InteractionManager : MonoBehaviour
 {
     public GameObject radarUi;
-    public GameObject radarNotification;
+    public GameObject radarAvailableNotification;
+    public GameObject radarActiveNotification;
     public GameObject radarArea;
     private Collider2D radarAreaCollider;
     private bool isRadarAvailable = false;
     private bool isRadarActive = false;
 
-
     public GameObject cableArea;
-    public GameObject cableNotification;
+    public GameObject cableAvailableNotification;
     private Collider2D cableAreaCollider;
     private bool isCableAvailable = false;
     public float cableSpeed = 1f;
-
-    public GameObject exitNotification;
-
-
     private float diverTargetHeightDelta = 0f;
     private float lastTargetHeightDeltaUpdate = 0f;
 
+    public GameObject steeringArea;
+    public GameObject steeringAvailableNotification;
+    public GameObject steeringActiveNotification;
+    private Collider2D steeringAreaCollider;
+    private bool isSteeringAvailable = false;
+    private bool isSteeringActive = false;
+
+    public GameObject ship;
+    public GameObject captain;
 
     // Start is called before the first frame update
     void Start()
     {
         radarAreaCollider = radarArea.GetComponent<Collider2D>();
         cableAreaCollider = cableArea.GetComponent<Collider2D>();
+        steeringAreaCollider = steeringArea.GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -41,6 +47,10 @@ public class InteractionManager : MonoBehaviour
             {
                 ActivateRadar();
             }
+            else if(isSteeringAvailable)
+            {
+                ActivateSteering();
+            }
         }
 
         if (Input.GetButtonDown("Cancel"))
@@ -48,6 +58,10 @@ public class InteractionManager : MonoBehaviour
             if(isRadarActive)
             {
                 DeactivateRadar();
+            }
+            if(isSteeringActive)
+            {
+                DeactivateSteering();
             }
         }
 
@@ -89,14 +103,23 @@ public class InteractionManager : MonoBehaviour
             isRadarAvailable = true;
             if(!isRadarActive)
             {
-                radarNotification.SetActive(true);
+                radarAvailableNotification.SetActive(true);
             }
         }
         if (collision == cableAreaCollider)
         {
             Debug.Log("Now in cable area");
             isCableAvailable = true;
-            cableNotification.SetActive(true);
+            cableAvailableNotification.SetActive(true);
+        }
+        if (collision == steeringAreaCollider)
+        {
+            Debug.Log("Now in steering area");
+            isSteeringAvailable = true;
+            if(!isSteeringActive)
+            {
+                steeringAvailableNotification.SetActive(true);
+            }
         }
     }
 
@@ -108,7 +131,7 @@ public class InteractionManager : MonoBehaviour
         {
             Debug.Log("Now no longer in radar area");
             isRadarAvailable = false;
-            radarNotification.SetActive(false);
+            radarAvailableNotification.SetActive(false);
             if (isRadarActive)
             {
                 DeactivateRadar();
@@ -118,27 +141,36 @@ public class InteractionManager : MonoBehaviour
         {
             Debug.Log("Now no longer in cable area");
             isCableAvailable = false;
-            cableNotification.SetActive(false);
+            cableAvailableNotification.SetActive(false);
+        }
+        if (collision == steeringAreaCollider)
+        {
+            Debug.Log("Now no longer in steering area");
+            isSteeringAvailable = false;
+            steeringAvailableNotification.SetActive(false);
+            if (isSteeringActive)
+            {
+                DeactivateSteering();
+            }
         }
     }
 
     private void ActivateRadar()
     {
-        radarNotification.SetActive(false);
+        radarAvailableNotification.SetActive(false);
         radarUi.SetActive(true);
         isRadarActive = true;
-        exitNotification.SetActive(true);
+        radarActiveNotification.SetActive(true);
     }
 
     private void DeactivateRadar()
     {
         radarUi.SetActive(false);
         isRadarActive = false;
-        exitNotification.SetActive(false);
-
+        radarActiveNotification.SetActive(false);
         if(isRadarAvailable)
         {
-            radarNotification.SetActive(true);
+            radarAvailableNotification.SetActive(true);
         }
     }
 
@@ -153,6 +185,28 @@ public class InteractionManager : MonoBehaviour
             NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(newDiverTargetHeight);
             lastTargetHeightDeltaUpdate = Time.time;
             diverTargetHeightDelta = 0f;
+        }
+    }
+
+    private void ActivateSteering()
+    {
+        steeringAvailableNotification.SetActive(false);
+        isSteeringActive = true;
+        captain.GetComponent<CaptainMovementController>().captainMovementDeactivated = true;
+        ship.GetComponent<ShipMovementController>().shipMovementDeactivated = false;
+        steeringActiveNotification.SetActive(true);
+    }
+
+
+    private void DeactivateSteering()
+    {
+        isSteeringActive = false;
+        captain.GetComponent<CaptainMovementController>().captainMovementDeactivated = false;
+        ship.GetComponent<ShipMovementController>().shipMovementDeactivated = true;
+        steeringActiveNotification.SetActive(false);
+        if(isSteeringAvailable)
+        {
+            steeringAvailableNotification.SetActive(true);
         }
     }
 }
