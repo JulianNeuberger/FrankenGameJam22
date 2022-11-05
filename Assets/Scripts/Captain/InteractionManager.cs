@@ -21,6 +21,9 @@ public class InteractionManager : MonoBehaviour
     public GameObject exitNotification;
 
 
+    private float diverTargetHeightDelta = 0f;
+    private float lastTargetHeightDeltaUpdate = 0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,9 +56,8 @@ public class InteractionManager : MonoBehaviour
             if(isCableAvailable)
             {
                 //increase diver height
-                float diverTargetHeight = NetworkSyncer.Get().diverTargetHeight.Value;
-                var newDiverTargetHeight = diverTargetHeight + Time.deltaTime * cableSpeed;
-                NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(newDiverTargetHeight);
+                diverTargetHeightDelta += Time.deltaTime * cableSpeed;
+                SendTargetHeightDeltaUpdate();
             }
         }
         if (Input.GetButton("Fire2"))
@@ -63,9 +65,8 @@ public class InteractionManager : MonoBehaviour
             if (isCableAvailable)
             {
                 //decrease diver height
-                float diverTargetHeight = NetworkSyncer.Get().diverTargetHeight.Value;
-                var newDiverTargetHeight = diverTargetHeight - Time.deltaTime * cableSpeed;
-                NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(newDiverTargetHeight);
+                diverTargetHeightDelta -= Time.deltaTime * cableSpeed;
+                SendTargetHeightDeltaUpdate();
             }
         }
     }
@@ -126,6 +127,20 @@ public class InteractionManager : MonoBehaviour
         if(isRadarAvailable)
         {
             radarNotification.SetActive(true);
+        }
+    }
+
+    private void SendTargetHeightDeltaUpdate()
+    {
+        float timeSinceLastUpdate = Time.time - lastTargetHeightDeltaUpdate;
+        Debug.Log($"TimeSinceLastUpdate: {timeSinceLastUpdate}");
+        if (timeSinceLastUpdate > 0.5)
+        {
+            float diverTargetHeight = NetworkSyncer.Get().diverTargetHeight.Value;
+            var newDiverTargetHeight = diverTargetHeight + diverTargetHeightDelta;
+            NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(newDiverTargetHeight);
+            lastTargetHeightDeltaUpdate = Time.time;
+            diverTargetHeightDelta = 0f;
         }
     }
 }

@@ -22,7 +22,7 @@ public class NetworkSyncer : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void UpdateDiverPositionServerRpc(Vector3 newPosition, ServerRpcParams serverRpcParams = default)
     {
-        Debug.Log($"Updating diver position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
+        //Debug.Log($"Updating diver position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
         diverPosition.Value = newPosition;
     }
 

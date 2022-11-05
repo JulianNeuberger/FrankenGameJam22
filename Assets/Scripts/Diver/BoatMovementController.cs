@@ -26,7 +26,7 @@ public class BoatMovementController : MonoBehaviour
 
         if (NetworkSyncer.Get())
         {
-            //NetworkSyncer.Get().diverPosition.Value = transform.position;
+            NetworkSyncer.Get().UpdateDiverPositionServerRpc(transform.position);
         }
     }
 
@@ -54,6 +54,11 @@ public class BoatMovementController : MonoBehaviour
 
     private void UpdateHeight()
     {
+        if (NetworkSyncer.Get())
+        {
+            targetHeight = NetworkSyncer.Get().diverTargetHeight.Value;
+        }
+
         var heightDiff = targetHeight - transform.position.y;
         var changeInHeight = Mathf.Sign(heightDiff) * Time.deltaTime * diveSpeed;
         if (Mathf.Abs(changeInHeight) > Mathf.Abs(heightDiff))
