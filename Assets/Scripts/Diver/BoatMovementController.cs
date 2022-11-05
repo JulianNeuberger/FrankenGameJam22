@@ -15,7 +15,7 @@ public class BoatMovementController : MonoBehaviour
     
     private void Start()
     {
-        targetHeight = transform.position.y;
+        NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(transform.position.y);
     }
     
     private void Update()

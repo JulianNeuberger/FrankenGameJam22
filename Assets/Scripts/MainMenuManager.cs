@@ -67,21 +67,44 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
-
-    public void LooseGame()
+    private void Update()
     {
-        if(iAmTheCaptainNow)
+        if (NetworkSyncer.Get())
         {
-            captainLooseScreen.SetActive(true);
-        }
-        else
-        {
-            diverLooseScreen.SetActive(true);
+            if (NetworkSyncer.Get().gameLost.Value)
+            {
+                ShowGameLost();
+            }
+            else if (NetworkSyncer.Get().gameWon.Value)
+            {
+                ShowGameWon();
+            }
         }
     }
 
 
-    public void WinGame()
+
+    public void ShowGameLost()
+    {
+        if(iAmTheCaptainNow)
+        {
+            captainLooseScreen.SetActive(true);
+            var looseScreenCanvasGroup = captainLooseScreen.GetComponent<CanvasGroup>();
+            if(looseScreenCanvasGroup.alpha < 0.6)
+            {
+                looseScreenCanvasGroup.alpha += 0.2f * Time.deltaTime;
+            }
+        }
+        else
+        {
+            diverLooseScreen.SetActive(true);
+            var looseScreenCanvasGroup = diverLooseScreen.GetComponent<CanvasGroup>();
+            looseScreenCanvasGroup.alpha += 0.3f * Time.deltaTime;
+        }
+    }
+
+
+    public void ShowGameWon()
     {
         if (iAmTheCaptainNow)
         {
