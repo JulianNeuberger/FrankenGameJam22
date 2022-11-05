@@ -17,4 +17,9 @@ public class NetworkSyncer : NetworkBehaviour
     {
         return inst;
     }
+
+    private void Update()
+    {
+        Debug.Log(diverPosition.Value);
+    }
 }

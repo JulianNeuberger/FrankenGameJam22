@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine.UI;
 using TMPro;
 using Unity.Netcode.Transports.UTP;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -12,12 +13,22 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button captainBtn;
     [SerializeField] private TMP_InputField ipInput;
 
+    [SerializeField] private NetworkObject syncManager;
+    [SerializeField] private GameObject mainMenuCanvas;
+
 
     private void Awake()
     {
         diverBtn.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
+
+            SceneManager.LoadScene("DiverScene", LoadSceneMode.Additive);
+
+            var instance = Instantiate(syncManager);
+            instance.Spawn();
+
+            mainMenuCanvas.SetActive(false);
         });
 
 
@@ -26,6 +37,12 @@ public class MainMenuManager : MonoBehaviour
             var ipAddress = ipInput.text;
             Debug.Log($"IP Address entered: {ipAddress}");
 
+            if(ipAddress == "")
+            {
+                ipAddress = "127.0.0.1";
+                Debug.Log($"No IP Address entered, using default {ipAddress}");
+            }
+
             //TODO: Validate IP address?
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
                 ipAddress,
@@ -33,6 +50,10 @@ public class MainMenuManager : MonoBehaviour
             );
 
             NetworkManager.Singleton.StartClient();
+
+            SceneManager.LoadScene("CaptainScene", LoadSceneMode.Additive);
+
+            mainMenuCanvas.SetActive(false);
         });
     }
 

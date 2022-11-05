@@ -23,7 +23,7 @@ public class BoatMovementController : MonoBehaviour
 
         if (NetworkSyncer.Get())
         {
-            NetworkSyncer.Get().diverPosition.Value = transform.position;
+            //NetworkSyncer.Get().diverPosition.Value = transform.position;
         }
     }
 

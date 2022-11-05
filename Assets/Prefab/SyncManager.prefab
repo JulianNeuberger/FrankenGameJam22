@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 87533663558312475}
   - component: {fileID: 4150380862695248809}
-  - component: {fileID: 8002626370541178452}
+  - component: {fileID: 4871017676684571177}
   m_Layer: 0
   m_Name: SyncManager
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diverPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
---- !u!114 &8002626370541178452
+--- !u!114 &4871017676684571177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
