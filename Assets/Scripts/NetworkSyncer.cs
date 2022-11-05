@@ -6,6 +6,7 @@ public class NetworkSyncer : NetworkBehaviour
     private static NetworkSyncer inst;
 
     public NetworkVariable<Vector3> diverPosition = new();
+    public NetworkVariable<Vector3> shipPosition = new();
     public NetworkVariable<float> diverTargetHeight = new();
     public NetworkVariable<bool> gameLost = new();
     public NetworkVariable<bool> gameWon = new();
@@ -14,6 +15,7 @@ public class NetworkSyncer : NetworkBehaviour
     {
         inst = this;
         diverPosition.Value = Vector3.zero;
+        shipPosition.Value = Vector3.zero;
         gameLost.Value = false;
         gameLost.Value = false;
     }
@@ -28,6 +30,13 @@ public class NetworkSyncer : NetworkBehaviour
     {
         //Debug.Log($"Updating diver position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
         diverPosition.Value = newPosition;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateShipPositionServerRpc(Vector3 newPosition, ServerRpcParams serverRpcParams = default)
+    {
+        //Debug.Log($"Updating diver position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
+        shipPosition.Value = newPosition;
     }
 
 
