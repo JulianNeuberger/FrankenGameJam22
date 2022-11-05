@@ -67,8 +67,24 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (NetworkSyncer.Get())
+        {
+            if (NetworkSyncer.Get().gameLost.Value)
+            {
+                ShowGameLost();
+            }
+            else if (NetworkSyncer.Get().gameWon.Value)
+            {
+                ShowGameWon();
+            }
+        }
+    }
 
-    public void LooseGame()
+
+
+    public void ShowGameLost()
     {
         if(iAmTheCaptainNow)
         {
@@ -81,7 +97,7 @@ public class MainMenuManager : MonoBehaviour
     }
 
 
-    public void WinGame()
+    public void ShowGameWon()
     {
         if (iAmTheCaptainNow)
         {

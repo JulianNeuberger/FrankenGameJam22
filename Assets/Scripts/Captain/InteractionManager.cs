@@ -35,7 +35,7 @@ public class InteractionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("InteractWithBoat"))
         {
             if(isRadarAvailable)
             {
@@ -51,7 +51,7 @@ public class InteractionManager : MonoBehaviour
             }
         }
 
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButton("CableUp"))
         {
             if(isCableAvailable)
             {
@@ -60,7 +60,7 @@ public class InteractionManager : MonoBehaviour
                 SendTargetHeightDeltaUpdate();
             }
         }
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButton("CableDown"))
         {
             if (isCableAvailable)
             {
@@ -69,6 +69,14 @@ public class InteractionManager : MonoBehaviour
                 SendTargetHeightDeltaUpdate();
             }
         }
+
+
+
+        if (Input.GetButton("GiveUp"))
+        {
+            NetworkSyncer.Get().SetGameToLostServerRpc();
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

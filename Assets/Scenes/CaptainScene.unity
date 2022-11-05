@@ -2884,4 +2884,5 @@ MonoBehaviour:
   radarArea: {fileID: 1217473115}
   cableArea: {fileID: 21590699}
   cableNotification: {fileID: 99157630}
+  cableSpeed: 1.5
   exitNotification: {fileID: 570947653}
