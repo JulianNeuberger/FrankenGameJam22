@@ -40,7 +40,7 @@ public class BoatMovementController : MonoBehaviour
     private void UpdateLateralMovement()
     {
         transform.position += transform.forward * (forwardSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
-        transform.position -= transform.right * GetSwayFactor();
+        //transform.position -= transform.right * GetSwayFactor();
     }
 
     private float GetSwayFactor()

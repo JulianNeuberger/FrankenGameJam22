@@ -8,11 +8,26 @@ public class MoveState : State
     public float turnSpeedDegrees = 25f;
     public State idleState;
 
+    private float timeout = 30f;
+    private Vector3 lastTarget;
+    private float timeSinceTargetChange;
+    
     public override State Tick()
     {
         UpdateRotation();
         UpdatePosition();
         
+        if (lastTarget != target)
+        {
+            lastTarget = target;
+            timeSinceTargetChange = 0f;
+        }
+
+        if (timeSinceTargetChange > timeout)
+        {
+            return idleState;
+        }
+
         if (IsAtTarget())
         {
             return idleState;
