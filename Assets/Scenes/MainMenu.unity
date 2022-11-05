@@ -270,7 +270,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 73206923}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1349,7 +1349,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017500829}
   m_Enabled: 1
-  m_Alpha: 0.5
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1852,7 +1852,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Just hire a new one
+  m_text: Just hire a new one :)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fbeb39a92b7fb9f4ba696d75c8cc64b3, type: 2}
   m_sharedMaterial: {fileID: 6170307991536126502, guid: fbeb39a92b7fb9f4ba696d75c8cc64b3, type: 2}
