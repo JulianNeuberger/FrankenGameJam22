@@ -9,6 +9,9 @@ public class BoatMovementController : MonoBehaviour
 
     public float targetHeight = 0f;
 
+    public float swayIntensity = .1f;
+    public float swayScale = 5f;
+
     
     private void Start()
     {
@@ -29,12 +32,24 @@ public class BoatMovementController : MonoBehaviour
 
     private void UpdateRotation()
     {
-        transform.Rotate(new Vector3(0, turnSpeedDegrees * Time.deltaTime * Input.GetAxis("Horizontal"), 0));
+        var rotation = new Vector3(0, turnSpeedDegrees * Time.deltaTime * Input.GetAxis("Horizontal"), 0);
+        rotation.y += GetSwayFactor();
+        transform.Rotate(rotation);
     }
     
     private void UpdateLateralMovement()
     {
         transform.position += transform.forward * (forwardSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        transform.position -= transform.right * GetSwayFactor();
+    }
+
+    private float GetSwayFactor()
+    {
+        var ret = Mathf.PerlinNoise(Time.deltaTime * swayScale, 0);
+        ret -= .5f;
+        ret *= 2f;
+        ret *= swayIntensity;
+        return ret;
     }
 
     private void UpdateHeight()
