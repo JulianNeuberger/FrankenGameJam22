@@ -57,9 +57,22 @@ public class MovementController : MonoBehaviour
 
     public void RotateTowardDirection()
     {
-        if (moveDirection != Vector2.zero)
+        //TODO: SPINNING PROBLEM PERSISTS
+
+        if (moveDirection != Vector2.zero && (moveDirection.x > 0.05 || moveDirection.y > 0.05))
         {
+            Debug.Log(moveDirection);
             transform.rotation = Quaternion.LookRotation(Vector3.back, moveDirection);
         }
+
+        //Debug.Log($"MoveDirection: {moveDirection}");
+
+        //if (moveDirection != Vector2.zero)
+        //{
+        //    float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+
+        //    Debug.Log($"Rotating with angle: {angle}");
+        //    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //}
     }
 }

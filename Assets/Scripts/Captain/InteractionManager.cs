@@ -5,20 +5,28 @@ using UnityEngine;
 public class InteractionManager : MonoBehaviour
 {
     public GameObject radarUi;
-    public GameObject radarArea;
     public GameObject radarNotification;
+    public GameObject radarArea;
     private Collider2D radarAreaCollider;
     private bool isRadarAvailable = false;
     private bool isRadarActive = false;
 
 
+    public GameObject cableArea;
+    public GameObject cableNotification;
+    private Collider2D cableAreaCollider;
+    private bool isCableAvailable = false;
+    public float cableSpeed = 1f;
+
     public GameObject exitNotification;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         radarAreaCollider = radarArea.GetComponent<Collider2D>();
+        cableAreaCollider = cableArea.GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -39,6 +47,27 @@ public class InteractionManager : MonoBehaviour
                 DeactivateRadar();
             }
         }
+
+        if(Input.GetButton("Fire1"))
+        {
+            if(isCableAvailable)
+            {
+                //increase diver height
+                float diverTargetHeight = NetworkSyncer.Get().diverTargetHeight.Value;
+                var newDiverTargetHeight = diverTargetHeight + Time.deltaTime * cableSpeed;
+                NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(newDiverTargetHeight);
+            }
+        }
+        if (Input.GetButton("Fire2"))
+        {
+            if (isCableAvailable)
+            {
+                //decrease diver height
+                float diverTargetHeight = NetworkSyncer.Get().diverTargetHeight.Value;
+                var newDiverTargetHeight = diverTargetHeight - Time.deltaTime * cableSpeed;
+                NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(newDiverTargetHeight);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,6 +83,12 @@ public class InteractionManager : MonoBehaviour
                 radarNotification.SetActive(true);
             }
         }
+        if (collision == cableAreaCollider)
+        {
+            Debug.Log("Now in cable area");
+            isCableAvailable = true;
+            cableNotification.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -65,6 +100,12 @@ public class InteractionManager : MonoBehaviour
             Debug.Log("Now no longer in radar area");
             isRadarAvailable = false;
             radarNotification.SetActive(false);
+        }
+        if (collision == cableAreaCollider)
+        {
+            Debug.Log("Now no longer in cable area");
+            isCableAvailable = false;
+            cableNotification.SetActive(false);
         }
     }
 
