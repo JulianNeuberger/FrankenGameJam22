@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ToggleFlashlight : MonoBehaviour
+public class ToggleFlashlight : UseableButton
 {
     public Light light;
     public Image icon;
@@ -22,8 +22,18 @@ public class ToggleFlashlight : MonoBehaviour
             return;
         }
 
+        Toggle();
+    }
+
+    private void Toggle()
+    {
         var isNowActive = !light.gameObject.activeSelf;
         light.gameObject.SetActive(isNowActive);
         icon.color = isNowActive ? activeColor : inactiveColor;
+    }
+
+    public override void Use()
+    {
+        Toggle();
     }
 }

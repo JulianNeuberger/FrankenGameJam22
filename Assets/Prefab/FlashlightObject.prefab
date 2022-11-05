@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7990820188496575969}
   - component: {fileID: 6909971573150430485}
   - component: {fileID: 5137046279929228770}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 9083188815150319991}
   - component: {fileID: 8646262875946927192}
   - component: {fileID: 732452886327664519}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 2990181528111397118}
   - component: {fileID: 2678967748911109561}
   - component: {fileID: 2138430685157897315}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 5851061539057414290}
   - component: {fileID: 990417042786129424}
   - component: {fileID: 5049232641106026789}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7176843389854786747}
   - component: {fileID: 4904399468798963315}
-  m_Layer: 0
+  - component: {fileID: 3849256674141208157}
+  m_Layer: 7
   m_Name: FlashlightObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,3 +461,16 @@ MonoBehaviour:
   icon: {fileID: 2138430685157897315}
   activeColor: {r: 1, g: 0.5921569, b: 0, a: 1}
   inactiveColor: {r: 0.5566038, g: 0.36382884, b: 0, a: 1}
+--- !u!65 &3849256674141208157
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7176843389854786748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.05, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
