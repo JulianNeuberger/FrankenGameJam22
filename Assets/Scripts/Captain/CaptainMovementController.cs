@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class CaptainMovementController : MonoBehaviour
 {
+    public bool captainMovementDeactivated = false;
     public float movementSpeed;
     public float turnSpeed;
     private float horizontalInput;
@@ -22,6 +23,11 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
+        if(captainMovementDeactivated)
+        {
+            return;
+        }
+
         //horizontalInput = Input.GetAxis("Horizontal");
         ////rb2D.MovePosition()
         //transform.Rotate(Vector3.back, Time.deltaTime * turnSpeed * horizontalInput);
@@ -37,6 +43,11 @@ public class MovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (captainMovementDeactivated)
+        {
+            return;
+        }
+
         Move();
         RotateTowardDirection();
     }
