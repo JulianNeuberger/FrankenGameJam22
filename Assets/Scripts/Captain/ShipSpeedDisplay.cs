@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+
 public class ShipSpeedDisplay : MonoBehaviour
 {
     public GameObject ship;
@@ -19,6 +20,6 @@ public class ShipSpeedDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        label.text = shipMovementController.currentSpeed.ToString();
+        label.text = Mathf.FloorToInt(shipMovementController.currentSpeed).ToString();
     }
 }

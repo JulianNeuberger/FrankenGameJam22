@@ -4618,9 +4618,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e912febe304304ab71d4bbd3821373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipMovementDeactivated: 0
-  acceleration: 2
-  maxSpeed: 5
+  shipMovementDeactivated: 1
+  acceleration: 0.5
+  maxSpeed: 2
   currentSpeed: 0
 --- !u!1 &1290645124
 GameObject:

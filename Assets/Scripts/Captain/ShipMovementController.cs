@@ -20,11 +20,15 @@ public class ShipMovementController : MonoBehaviour
     {
         if (shipMovementDeactivated)
         {
+            Debug.Log("Shipmovement is deactivated");
             return;
         }
 
-        var v = Input.GetAxisRaw("Vertical");
+        Debug.Log("Shipmovement is ACTIVE");
 
+
+        //Compute speed
+        var v = Input.GetAxisRaw("Vertical");
         if (v > 0 && currentSpeed < maxSpeed)
         {
             var newCurrentSpeed = currentSpeed + (acceleration * Time.deltaTime * v);
@@ -39,7 +43,7 @@ public class ShipMovementController : MonoBehaviour
         }
         else if (v < 0 && currentSpeed > 0)
         {
-            var newCurrentSpeed = currentSpeed - (acceleration * Time.deltaTime * v);
+            var newCurrentSpeed = currentSpeed + (acceleration * Time.deltaTime * v);
             if(newCurrentSpeed < 0)
             {
                 currentSpeed = 0;
@@ -50,8 +54,11 @@ public class ShipMovementController : MonoBehaviour
             }
         }
 
-        //TODO: MOVE SHIP
+    }
 
-
+    private void FixedUpdate()
+    {
+        //Move ship
+        transform.Translate(new Vector3(-1, 0, 0) * currentSpeed * Time.deltaTime);
     }
 }
