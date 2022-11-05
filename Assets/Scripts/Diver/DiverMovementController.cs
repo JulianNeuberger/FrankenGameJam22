@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class BoatMovementController : MonoBehaviour
+public class DiverMovementController : MonoBehaviour
 {
     public float forwardSpeed = 15f;
     public float turnSpeedDegrees = 10f;
@@ -11,6 +11,9 @@ public class BoatMovementController : MonoBehaviour
 
     public float swayIntensity = .1f;
     public float swayScale = 5f;
+
+    public float maxDistanceToShip = 50f;
+    public float drawToShipSpeed = 10f;
 
     
     private void Start()
@@ -41,6 +44,19 @@ public class BoatMovementController : MonoBehaviour
     {
         transform.position += transform.forward * (forwardSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
         //transform.position -= transform.right * GetSwayFactor();
+
+        var shipPosition = NetworkSyncer.Get().shipPosition.Value;
+        var vectorToShipWithoutHeight = new Vector3(shipPosition.x - transform.position.x, 0, shipPosition.z - transform.position.z);
+        var distanceToShipWithoutHeight = vectorToShipWithoutHeight.magnitude;
+
+        if (distanceToShipWithoutHeight > maxDistanceToShip)
+        {
+            var vectorToShipWithoutHeightNormalized = new Vector3(vectorToShipWithoutHeight.x / distanceToShipWithoutHeight, 
+                0,
+                vectorToShipWithoutHeight.z / distanceToShipWithoutHeight);
+
+            transform.position += vectorToShipWithoutHeightNormalized * (drawToShipSpeed * Time.deltaTime);
+        }
     }
 
     private float GetSwayFactor()

@@ -13,6 +13,7 @@ public class ShipMovementController : MonoBehaviour
 
     void Start()
     {
+        NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
     }
 
 
@@ -60,5 +61,10 @@ public class ShipMovementController : MonoBehaviour
     {
         //Move ship
         transform.Translate(new Vector3(-1, 0, 0) * currentSpeed * Time.deltaTime);
+
+        if (NetworkSyncer.Get())
+        {
+            NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
+        }
     }
 }
