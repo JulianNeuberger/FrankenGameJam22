@@ -21,8 +21,8 @@ public class UnderwaterLookController : MonoBehaviour
         RenderSettings.fogEndDistance = fogEnd;
         RenderSettings.fogMode = FogMode.Linear;
         RenderSettings.fogColor = underwaterColor;
-        RenderSettings.ambientLight = Color.black;
-        RenderSettings.ambientSkyColor = Color.black;
+        RenderSettings.ambientLight = underwaterColor;
+        RenderSettings.ambientSkyColor = underwaterColor;
         RenderSettings.ambientMode = AmbientMode.Flat;
         RenderSettings.skybox = null;
     }
