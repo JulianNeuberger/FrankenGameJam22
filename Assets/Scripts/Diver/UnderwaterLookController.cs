@@ -15,7 +15,7 @@ public class UnderwaterLookController : MonoBehaviour
     void Start()
     {
         Camera.main.backgroundColor = underwaterColor;
-        RenderSettings.fog = true;
+        RenderSettings.fog = false;
         RenderSettings.fogDensity = fogDensity;
         RenderSettings.fogStartDistance = fogStart;
         RenderSettings.fogEndDistance = fogEnd;
