@@ -13,8 +13,15 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button captainBtn;
     [SerializeField] private TMP_InputField ipInput;
 
+    private bool iAmTheCaptainNow = false;
+
     [SerializeField] private NetworkObject syncManager;
     [SerializeField] private GameObject mainMenuCanvas;
+
+    [SerializeField] private GameObject diverLooseScreen;
+    [SerializeField] private GameObject captainLooseScreen;
+    [SerializeField] private GameObject diverWinScreen;
+    [SerializeField] private GameObject captainWinScreen;
 
 
     private void Awake()
@@ -29,6 +36,7 @@ public class MainMenuManager : MonoBehaviour
             instance.Spawn();
 
             mainMenuCanvas.SetActive(false);
+            iAmTheCaptainNow = false;
         });
 
 
@@ -54,8 +62,35 @@ public class MainMenuManager : MonoBehaviour
             SceneManager.LoadScene("CaptainScene", LoadSceneMode.Additive);
 
             mainMenuCanvas.SetActive(false);
+            iAmTheCaptainNow = true;
         });
     }
 
+
+
+    public void LooseGame()
+    {
+        if(iAmTheCaptainNow)
+        {
+            captainLooseScreen.SetActive(true);
+        }
+        else
+        {
+            diverLooseScreen.SetActive(true);
+        }
+    }
+
+
+    public void WinGame()
+    {
+        if (iAmTheCaptainNow)
+        {
+            captainWinScreen.SetActive(true);
+        }
+        else
+        {
+            diverWinScreen.SetActive(true);
+        }
+    }
 }
    

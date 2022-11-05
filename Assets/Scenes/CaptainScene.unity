@@ -2146,3 +2146,4 @@ MonoBehaviour:
   radarUi: {fileID: 1290645124}
   radarArea: {fileID: 1217473115}
   radarNotification: {fileID: 1962803586}
+  exitNotification: {fileID: 570947653}
