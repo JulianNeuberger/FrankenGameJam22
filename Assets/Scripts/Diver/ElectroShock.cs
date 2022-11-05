@@ -4,7 +4,7 @@ using DigitalRuby.LightningBolt;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ElectroShock : MonoBehaviour
+public class ElectroShock : UseableButton
 {
     public float cooldownSeconds = 10f;
     public float energyCost = 0f;
@@ -19,7 +19,7 @@ public class ElectroShock : MonoBehaviour
     public Color activeColor;
     public Color inactiveColor;
 
-    private float lastShock;
+    private float lastShock = float.MinValue;
 
     private List<SharkController> inRange = new();
 
@@ -27,7 +27,12 @@ public class ElectroShock : MonoBehaviour
     {
         flash.gameObject.SetActive(false);
     }
-    
+
+    public override void Use()
+    {
+        DoShock();
+    }
+
     private void Update()
     {
         if (Input.GetKeyUp("e"))

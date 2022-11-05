@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7213062165082145094}
   - component: {fileID: 6328782204142415290}
   - component: {fileID: 685707533294943513}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 7805723977755773567}
   - component: {fileID: 7780784501249534569}
   - component: {fileID: 9111033158347811809}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3955141979455339684}
   - component: {fileID: 7652372536558285576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 2764507018630499249}
   - component: {fileID: 9013986268728609769}
   - component: {fileID: 2253329577072376085}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,8 +420,7 @@ GameObject:
   - component: {fileID: 7966967404646225209}
   - component: {fileID: 1581048239135285978}
   - component: {fileID: 5099016275343112629}
-  - component: {fileID: 9131586766950381687}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,19 +492,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &9131586766950381687
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6593468091082354269}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7876070757524349668
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +502,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3366937566995485429}
   - component: {fileID: 8991324141548776520}
-  m_Layer: 0
+  - component: {fileID: 4955521680884238578}
+  m_Layer: 7
   m_Name: ElectroShockButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,4 +547,17 @@ MonoBehaviour:
   flash: {fileID: 7652372536558285576}
   icon: {fileID: 2253329577072376085}
   activeColor: {r: 1, g: 0.5921569, b: 0, a: 1}
-  inactiveColor: {r: 0.5568628, g: 0.3647059, b: 0, a: 1}
+  inactiveColor: {r: 0.254717, g: 0.21201314, b: 0.13096298, a: 1}
+--- !u!65 &4955521680884238578
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7876070757524349668}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.05, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
