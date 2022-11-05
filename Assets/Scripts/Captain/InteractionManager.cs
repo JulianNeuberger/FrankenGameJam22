@@ -109,6 +109,10 @@ public class InteractionManager : MonoBehaviour
             Debug.Log("Now no longer in radar area");
             isRadarAvailable = false;
             radarNotification.SetActive(false);
+            if (isRadarActive)
+            {
+                DeactivateRadar();
+            }
         }
         if (collision == cableAreaCollider)
         {
