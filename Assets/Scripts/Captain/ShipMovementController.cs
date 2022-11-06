@@ -10,7 +10,7 @@ public class ShipMovementController : MonoBehaviour
 
     public float currentSpeed;
 
-    private Vector3 simulatedShipPositon = Vector3.zero;
+    private Vector3 simulatedShipPositon = new Vector3(500f, 0f, 500f); //hardcoded to approximately match diver start position
 
     private InteractionManager interactionManager;
 

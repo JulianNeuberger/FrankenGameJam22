@@ -20,9 +20,9 @@ public class NetworkSyncer : NetworkBehaviour
     private void Awake()
     {
         inst = this;
-        shipPosition.Value = Vector3.zero;
+        shipPosition.Value = new Vector3(500f, 0f, 500f); //hardcoded to approximately match diver start position
         diverPosition.Value = Vector3.zero;
-        diverTargetHeight.Value = 0f;
+        diverTargetHeight.Value = 30f; //hardcoded to approximately match diver start position
 
         sharkPosition.Value = Vector3.zero;
         treasurePositions = new NetworkList<Vector3>();

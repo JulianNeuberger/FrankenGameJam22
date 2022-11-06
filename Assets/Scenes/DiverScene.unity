@@ -679,7 +679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 340726071243030354, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
       propertyPath: maxDistanceToShip
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 340726071243030355, guid: 0394e23928dfff643a062e3345767aa6, type: 3}
       propertyPath: m_RootOrder
