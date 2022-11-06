@@ -3,15 +3,15 @@ using UnityEngine;
 public class MoveState : State
 {
     public float moveSpeed = 3f;
-    public float chargeSpeed = 6f;
+    public float chargeSpeed = 9f;
     public Vector3 target;
-    public float arriveRadius = 7.5f;
+    public float arriveRadius = 5f;
     public float maxHeight = 10f;
     public float turnSpeedDegrees = 25f;
     public State idleState;
 
     [HideInInspector] public bool canCharge = false;
-    [HideInInspector] public float chargeDistance = 10f;
+    [HideInInspector] public float chargeDistance = 6f;
     
     private float timeout = 30f;
     private Vector3 lastTarget;
@@ -52,7 +52,7 @@ public class MoveState : State
         var moveAmount = Mathf.Clamp(Mathf.Cos(angleToTarget), 0f, 1f);
 
         var speed = moveSpeed;
-        if (canCharge && chargeDistance < DistanceToTarget())
+        if (canCharge && DistanceToTarget() < chargeDistance)
         {
             speed = chargeSpeed;
         }

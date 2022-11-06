@@ -437,7 +437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537760104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 477.6, y: 46, z: 493}
+  m_LocalPosition: {x: 494.7, y: 30.2, z: 490.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -461,10 +461,12 @@ MonoBehaviour:
   maxDistanceToMoveAnchor: 25
   aggroRange: 15
   player: {fileID: 340726070833236000}
-  stalkDistance: 15
+  stalkDistance: 20
   attackState: {fileID: 1537760109}
   moveState: {fileID: 1537760108}
+  isStalking: 0
   stalkAmountGain: 0.01
+  stalkChance: 0
 --- !u!54 &1537760107
 Rigidbody:
   m_ObjectHideFlags: 0

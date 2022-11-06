@@ -15,7 +15,6 @@ public class AttackState : State
             return idleState;
         }
         
-        Debug.Log("Dead!");
         NetworkSyncer.Get().SetGameToLostServerRpc();
         
         return this;

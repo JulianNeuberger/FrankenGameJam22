@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class IdleState : State
 {
@@ -12,13 +14,13 @@ public class IdleState : State
 
     public AttackState attackState;
     public MoveState moveState;
-    
+
     private Vector3 target;
-    private bool isStalking;
+    [SerializeField] private bool isStalking;
     private Vector3 spawnPos;
 
     public float stalkAmountGain = .01f;
-    private float stalkChance = 0.0f;
+    [SerializeField] private float stalkChance = 0.0f;
     private ToggleFlashlight _flashlight;
 
     // Start is called before the first frame update
@@ -45,11 +47,15 @@ public class IdleState : State
 
         if (distanceToPlayer < aggroRange)
         {
+            Debug.Log("Aggro");
             moveState.target = player.transform.position;
+            moveAnchor = player.transform.position;
             moveState.canCharge = true;
+            moveState.arriveRadius = attackState.attackRange;
             return moveState;
         }
 
+        moveState.arriveRadius = 5f;
         moveState.canCharge = false;
 
         if (isStalking)
@@ -58,6 +64,10 @@ public class IdleState : State
             if (shouldStopStalking)
             {
                 StopStalking();
+            }
+            else
+            {
+                MoveToNextPosition();
             }
         }
         else
@@ -68,8 +78,12 @@ public class IdleState : State
             {
                 StartStalking();
             }
+            else
+            {
+                MoveToNextPosition();
+            }
         }
-        
+
         return moveState;
     }
 
@@ -79,7 +93,7 @@ public class IdleState : State
         moveAnchor = moveState.target;
         isStalking = false;
     }
-    
+
     private void StartStalking()
     {
         moveState.target = ChooseStalkTarget();
@@ -87,8 +101,14 @@ public class IdleState : State
         isStalking = true;
     }
 
+    private void MoveToNextPosition()
+    {
+        moveState.target = ChooseAnchoredTarget();
+    }
+
     private void UpdateStalkChance()
     {
+        var oldStalkChance = stalkChance;
         if (_flashlight.IsFlashlightOn())
         {
             stalkChance += stalkAmountGain * Time.deltaTime;
@@ -115,7 +135,8 @@ public class IdleState : State
     private Vector3 ChooseFarTarget()
     {
         var newTarget = player.transform.position;
-        newTarget += new Vector3(Random.value, Random.value, Random.value) * 25f;
+        newTarget += new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 25f;
+        newTarget.y = player.transform.position.y + Random.Range(-1f, 1f) * 2f;
 
         var terrain = GetClosestCurrentTerrain(newTarget);
         var terrainHeight = terrain.SampleHeight(newTarget);
@@ -136,12 +157,12 @@ public class IdleState : State
         else
         {
             var forward = transform.forward;
-            newTarget = transform.position + forward * 15f;
+            newTarget = transform.position + forward * 5f;
         }
-        
+
         var turnRadius = 2f;
         var targetDir = Random.insideUnitCircle.normalized * turnRadius;
-        newTarget += new Vector3(targetDir.x, targetDir.y, 0) * 5f;
+        newTarget += new Vector3(targetDir.x, 0, targetDir.y) * 5f;
 
         var terrain = GetClosestCurrentTerrain(newTarget);
         var terrainHeight = terrain.SampleHeight(newTarget);
@@ -158,6 +179,7 @@ public class IdleState : State
         {
             return "stalking";
         }
+
         return "not stalking";
     }
 
@@ -187,9 +209,8 @@ public class IdleState : State
                 lowDist = dist;
                 terrainIndex = i;
             }
-            
-            
         }
+
         return terrains[terrainIndex];
     }
 
@@ -198,12 +219,18 @@ public class IdleState : State
         var distances = new List<float>();
         var terrainPos = terrain.GetPosition();
         var terrainSize = terrain.terrainData.size;
-        
+
         distances.Add((new Vector3(terrainPos.x, terrainPos.y, terrainPos.z) - pos).sqrMagnitude);
         distances.Add((new Vector3(terrainPos.x + terrainSize.x, terrainPos.y, terrainPos.z) - pos).sqrMagnitude);
         distances.Add((new Vector3(terrainPos.x, terrainPos.y, terrainPos.z + terrainSize.z) - pos).sqrMagnitude);
-        distances.Add((new Vector3(terrainPos.x + terrainSize.x, terrainPos.y, terrainPos.z + terrainSize.z) - pos).sqrMagnitude);
+        distances.Add((new Vector3(terrainPos.x + terrainSize.x, terrainPos.y, terrainPos.z + terrainSize.z) - pos)
+            .sqrMagnitude);
 
         return distances.Min();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, aggroRange);
     }
 }
