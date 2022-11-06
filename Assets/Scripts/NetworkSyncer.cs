@@ -12,6 +12,8 @@ public class NetworkSyncer : NetworkBehaviour
     public NetworkVariable<Vector3> sharkPosition = new();
     public NetworkList<Vector3> treasurePositions = null;
 
+    public NetworkVariable<int> numTreasuresCollected = new();
+
     public NetworkVariable<bool> gameLost = new();
     public NetworkVariable<bool> gameWon = new();
 
@@ -23,10 +25,9 @@ public class NetworkSyncer : NetworkBehaviour
         diverTargetHeight.Value = 0f;
 
         sharkPosition.Value = Vector3.zero;
-
         treasurePositions = new NetworkList<Vector3>();
 
-
+        numTreasuresCollected.Value = 0;
 
         gameLost.Value = false;
         gameLost.Value = false;
@@ -82,11 +83,11 @@ public class NetworkSyncer : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void RemoveTreasurePositionServerRpc(Vector3 treasurePosition, ServerRpcParams serverRpcParams = default)
+    public void CollectTreasureServerRpc(Vector3 treasurePosition, ServerRpcParams serverRpcParams = default)
     {
         treasurePositions.Remove(treasurePosition);
+        numTreasuresCollected.Value = numTreasuresCollected.Value + 1;
     }
-
 
 
     [ServerRpc(RequireOwnership = false)]
