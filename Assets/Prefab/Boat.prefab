@@ -349,8 +349,8 @@ MonoBehaviour:
   turnSpeedDegrees: 15
   diveSpeed: 1
   targetHeight: 34.53
-  swayIntensity: 0.1
-  swayScale: 5
+  swayIntensity: 0.002
+  swayScale: 1
   maxDistanceToShip: 50
   drawToShipSpeed: 10
 --- !u!54 &340726071243030353

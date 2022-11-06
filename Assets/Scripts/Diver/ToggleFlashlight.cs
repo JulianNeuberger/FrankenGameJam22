@@ -7,7 +7,7 @@ public class ToggleFlashlight : UseableButton
     public Image icon;
     public Color activeColor;
     public Color inactiveColor;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +27,18 @@ public class ToggleFlashlight : UseableButton
 
     private void Toggle()
     {
-        var isNowActive = !light.gameObject.activeSelf;
-        light.gameObject.SetActive(isNowActive);
-        icon.color = isNowActive ? activeColor : inactiveColor;
+        var newState = !light.gameObject.activeSelf;
+        light.gameObject.SetActive(newState);
+        icon.color = newState ? activeColor : inactiveColor;
     }
 
     public override void Use()
     {
         Toggle();
+    }
+
+    public bool IsFlashlightOn()
+    {
+        return light.gameObject.activeInHierarchy;
     }
 }
