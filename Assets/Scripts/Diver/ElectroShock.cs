@@ -22,10 +22,12 @@ public class ElectroShock : UseableButton
     private float lastShock = float.MinValue;
 
     private List<SharkController> inRange = new();
+    private AudioSource _thunderAudio;
 
     private void Start()
     {
         flash.gameObject.SetActive(false);
+        _thunderAudio = GetComponentInChildren<AudioSource>();
     }
 
     public override void Use()
@@ -51,6 +53,7 @@ public class ElectroShock : UseableButton
         }
 
         lastShock = Time.time;
+        _thunderAudio.Play();
         SpawnEffect();
 
         foreach (var shark in inRange)

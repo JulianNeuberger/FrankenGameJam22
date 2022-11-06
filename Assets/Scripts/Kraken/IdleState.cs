@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +16,11 @@ public class IdleState : State
     public AttackState attackState;
     public MoveState moveState;
 
+    public AudioSource stalkingSound;
+    public AudioSource aggroSound;
+    public AudioSource particleSound;
+    public ToggleFlashlight flashlight;
+    
     private Vector3 target;
     [SerializeField] private bool isStalking;
     private Vector3 spawnPos;
@@ -47,7 +53,14 @@ public class IdleState : State
 
         if (distanceToPlayer < aggroRange)
         {
-            Debug.Log("Aggro");
+            StartCoroutine(FadeSource(particleSound));
+            StartCoroutine(FadeSource(stalkingSound));
+            if (!aggroSound.isPlaying)
+            {
+                Debug.Log("start aggro sound");
+                aggroSound.Play();
+            }
+
             moveState.target = player.transform.position;
             moveAnchor = player.transform.position;
             moveState.canCharge = true;
@@ -80,6 +93,10 @@ public class IdleState : State
             }
             else
             {
+                if (!particleSound.isPlaying && flashlight.IsFlashlightOn())
+                {
+                    particleSound.Play();
+                }
                 MoveToNextPosition();
             }
         }
@@ -96,6 +113,11 @@ public class IdleState : State
 
     private void StartStalking()
     {
+        StartCoroutine(FadeSource(particleSound));
+        if (!stalkingSound.isPlaying)
+        {
+            stalkingSound.Play();
+        }
         moveState.target = ChooseStalkTarget();
         moveAnchor = moveState.target;
         isStalking = true;
@@ -232,5 +254,18 @@ public class IdleState : State
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, aggroRange);
+    }
+
+    private IEnumerator FadeSource(AudioSource source)
+    {
+        var startVol = source.volume;
+        while (source.volume > 0)
+        {
+            source.volume -= Time.deltaTime;
+            yield return null;
+        }
+
+        source.Stop();
+        source.volume = startVol;
     }
 }

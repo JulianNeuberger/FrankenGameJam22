@@ -4,9 +4,16 @@ using UnityEngine;
 public class Treasure : Collectible
 {
     public GameObject hookPrefab;
-    
+
+    private bool isCollecting = false;
+
     public override void Collect()
     {
+        if (isCollecting)
+        {
+            return;
+        }
+        isCollecting = true;
         StartCoroutine(CollectionAnimation());
     }
 
@@ -42,5 +49,7 @@ public class Treasure : Collectible
         Destroy(hookInstance.gameObject);
 
         NetworkSyncer.Get().CollectTreasureServerRpc(transform.position);
+
+        isCollecting = false;
     }
 }

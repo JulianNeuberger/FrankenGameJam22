@@ -461,6 +461,8 @@ MonoBehaviour:
   icon: {fileID: 2138430685157897315}
   activeColor: {r: 1, g: 0.5921569, b: 0, a: 1}
   inactiveColor: {r: 0.5566038, g: 0.36382884, b: 0, a: 1}
+  particleSounds: {fileID: 0}
+  shark: {fileID: 0}
 --- !u!65 &3849256674141208157
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
 using UnityEngine;
 
 public class ButtonUseManager : MonoBehaviour
-{    
+{
+    public AudioSource buttonSound;
+    
     private int buttonLayer;
     
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class ButtonUseManager : MonoBehaviour
             var button = hit.collider.gameObject.GetComponent<UseableButton>();
             if (button != null)
             {
+                buttonSound.Play();
                 button.Use();
             }
         }
