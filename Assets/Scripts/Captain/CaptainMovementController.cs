@@ -10,14 +10,16 @@ public class CaptainMovementController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
-    private Rigidbody2D rb2D;
 
-    private Vector2 moveDirection;
+    public Animator animator;
+    private Rigidbody2D rb;
+
+    private Vector2 movement;
 
 
     void Start()
     {
-        rb2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
 
@@ -28,16 +30,13 @@ public class CaptainMovementController : MonoBehaviour
             return;
         }
 
-        //horizontalInput = Input.GetAxis("Horizontal");
-        ////rb2D.MovePosition()
-        //transform.Rotate(Vector3.back, Time.deltaTime * turnSpeed * horizontalInput);
+        movement.x = Input.GetAxis("Horizontal");
+        movement.y = Input.GetAxis("Vertical");
 
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
 
-        //verticalInput = Input.GetAxis("Vertical");
-        //rb2D.MovePosition(rb2D.position + new Vector2(1, 0) * Time.deltaTime);
-        ////transform.Translate(Vector3.right * Time.deltaTime * movementSpeed * verticalInput);
-
-        ProcessInputs();
     }
 
 
@@ -48,42 +47,6 @@ public class CaptainMovementController : MonoBehaviour
             return;
         }
 
-        Move();
-        RotateTowardDirection();
-    }
-
-    void ProcessInputs()
-    {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
-
-        moveDirection = new Vector2(moveX, moveY);
-
-    }
-
-    void Move()
-    {
-        rb2D.velocity = moveDirection * movementSpeed;
-    }
-
-    public void RotateTowardDirection()
-    {
-        //TODO: SPINNING PROBLEM PERSISTS
-
-        if (moveDirection != Vector2.zero && (moveDirection.x > 0.05 || moveDirection.y > 0.05))
-        {
-            Debug.Log(moveDirection);
-            transform.rotation = Quaternion.LookRotation(Vector3.back, moveDirection);
-        }
-
-        //Debug.Log($"MoveDirection: {moveDirection}");
-
-        //if (moveDirection != Vector2.zero)
-        //{
-        //    float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-
-        //    Debug.Log($"Rotating with angle: {angle}");
-        //    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        //}
+        rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
     }
 }
