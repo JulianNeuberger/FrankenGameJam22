@@ -84,15 +84,19 @@ public class InteractionManager : MonoBehaviour
             }
         }
 
+        //TODO: REMOVE, ONLY FOR DEBUG
 
-
-        if (Input.GetButton("GiveUp"))
+        if (Input.GetButtonDown("GiveUp"))
         {
             NetworkSyncer.Get().SetGameToLostServerRpc();
         }
-        if (Input.GetButton("Submit"))
+        if (Input.GetButtonDown("Submit"))
         {
             NetworkSyncer.Get().SetGameToWonServerRpc();
+        }
+        if (Input.GetButtonDown("CollectTreasure"))
+        {
+            NetworkSyncer.Get().CollectTreasureServerRpc(new Vector3());
         }
 
     }

@@ -90,7 +90,7 @@ public class MainMenuManager : MonoBehaviour
         {
             captainLooseScreen.SetActive(true);
             var looseScreenCanvasGroup = captainLooseScreen.GetComponent<CanvasGroup>();
-            if(looseScreenCanvasGroup.alpha < 0.6)
+            if(looseScreenCanvasGroup.alpha < 0.8)
             {
                 looseScreenCanvasGroup.alpha += 0.2f * Time.deltaTime;
             }
@@ -110,7 +110,7 @@ public class MainMenuManager : MonoBehaviour
         {
             captainWinScreen.SetActive(true);
             var winScreenCanvasGroup = captainWinScreen.GetComponent<CanvasGroup>();
-            if (winScreenCanvasGroup.alpha < 0.6)
+            if (winScreenCanvasGroup.alpha < 0.8)
             {
                 winScreenCanvasGroup.alpha += 0.2f * Time.deltaTime;
             }
