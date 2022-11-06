@@ -109,10 +109,17 @@ public class MainMenuManager : MonoBehaviour
         if (iAmTheCaptainNow)
         {
             captainWinScreen.SetActive(true);
+            var winScreenCanvasGroup = captainWinScreen.GetComponent<CanvasGroup>();
+            if (winScreenCanvasGroup.alpha < 0.6)
+            {
+                winScreenCanvasGroup.alpha += 0.2f * Time.deltaTime;
+            }
         }
         else
         {
             diverWinScreen.SetActive(true);
+            var winScreenCanvasGroup = diverWinScreen.GetComponent<CanvasGroup>();
+            winScreenCanvasGroup.alpha += 0.3f * Time.deltaTime;
         }
     }
 }

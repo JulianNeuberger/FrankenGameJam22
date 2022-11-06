@@ -90,6 +90,10 @@ public class InteractionManager : MonoBehaviour
         {
             NetworkSyncer.Get().SetGameToLostServerRpc();
         }
+        if (Input.GetButton("Submit"))
+        {
+            NetworkSyncer.Get().SetGameToWonServerRpc();
+        }
 
     }
 
