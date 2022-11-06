@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a20ae6f-a41b-49a0-ac58-23ccade97eef" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Images/ruler.aseprite.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/ruler.aseprite.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Images/ruler.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/ruler.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CaptainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CaptainScene.unity" afterDir="false" />
@@ -37,7 +38,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667656275039</updated>
-      <workItem from="1667656277131" duration="1940000" />
+      <workItem from="1667656277131" duration="2534000" />
     </task>
     <servers />
   </component>
