@@ -38,7 +38,7 @@ public class CaptainMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (interactionManager.GetIsSteeringActive() || interactionManager.GetIsRadarActive())
+        if (interactionManager.GetIsSteeringActive() || interactionManager.GetIsRadarActive() || interactionManager.GetIsBookActive())
         {
             return;
         }

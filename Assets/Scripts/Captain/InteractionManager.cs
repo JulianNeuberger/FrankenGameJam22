@@ -27,6 +27,14 @@ public class InteractionManager : MonoBehaviour
     private bool isSteeringAvailable = false;
     private bool isSteeringActive = false;
 
+    public GameObject bookUi;
+    public GameObject bookAvailableNotification;
+    public GameObject bookActiveNotification;
+    public GameObject bookArea;
+    private Collider2D bookAreaCollider;
+    private bool isBookAvailable = false;
+    private bool isBookActive = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +42,7 @@ public class InteractionManager : MonoBehaviour
         radarAreaCollider = radarArea.GetComponent<Collider2D>();
         cableAreaCollider = cableArea.GetComponent<Collider2D>();
         steeringAreaCollider = steeringArea.GetComponent<Collider2D>();
+        bookAreaCollider = bookArea.GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -49,6 +58,10 @@ public class InteractionManager : MonoBehaviour
             {
                 ActivateSteering();
             }
+            else if (isBookAvailable)
+            {
+                ActivateBook();
+            }
         }
 
         if (Input.GetButtonDown("Cancel"))
@@ -60,6 +73,10 @@ public class InteractionManager : MonoBehaviour
             if(isSteeringActive)
             {
                 DeactivateSteering();
+            }
+            if (isBookActive)
+            {
+                DeactivateBook();
             }
         }
 
@@ -127,6 +144,15 @@ public class InteractionManager : MonoBehaviour
                 steeringAvailableNotification.SetActive(true);
             }
         }
+        if (collision == bookAreaCollider)
+        {
+            Debug.Log("Now in book area");
+            isBookAvailable = true;
+            if (!isBookActive)
+            {
+                bookAvailableNotification.SetActive(true);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -157,6 +183,16 @@ public class InteractionManager : MonoBehaviour
             if (isSteeringActive)
             {
                 DeactivateSteering();
+            }
+        }
+        if (collision == bookAreaCollider)
+        {
+            Debug.Log("Now no longer in book area");
+            isBookAvailable = false;
+            bookAvailableNotification.SetActive(false);
+            if (isBookActive)
+            {
+                DeactivateRadar();
             }
         }
     }
@@ -217,12 +253,39 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    private void ActivateBook()
+    {
+        Debug.Log("Activating Book");
+        bookAvailableNotification.SetActive(false);
+        bookUi.SetActive(true);
+        isBookActive = true;
+        bookActiveNotification.SetActive(true);
+    }
+
+    private void DeactivateBook()
+    {
+        Debug.Log("Deactivating Book");
+        bookUi.SetActive(false);
+        isBookActive = false;
+        bookActiveNotification.SetActive(false);
+        if (isBookAvailable)
+        {
+            bookAvailableNotification.SetActive(true);
+        }
+    }
+
+
     public bool GetIsSteeringActive()
     {
         return isSteeringActive;
     }
 
     public bool GetIsRadarActive()
+    {
+        return isRadarActive;
+    }
+
+    public bool GetIsBookActive()
     {
         return isRadarActive;
     }
