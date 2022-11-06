@@ -27,8 +27,6 @@ public class InteractionManager : MonoBehaviour
     private bool isSteeringAvailable = false;
     private bool isSteeringActive = false;
 
-    public GameObject ship;
-    public GameObject captain;
 
     // Start is called before the first frame update
     void Start()
@@ -103,7 +101,7 @@ public class InteractionManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TRIGGER ENTERED!");
+        //Debug.Log("TRIGGER ENTERED!");
 
         if(collision == radarAreaCollider)
         {
@@ -133,7 +131,7 @@ public class InteractionManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("TRIGGER EXITED!");
+        //Debug.Log("TRIGGER EXITED!");
 
         if (collision == radarAreaCollider)
         {
@@ -165,6 +163,7 @@ public class InteractionManager : MonoBehaviour
 
     private void ActivateRadar()
     {
+        Debug.Log("Activating Radar");
         radarAvailableNotification.SetActive(false);
         radarUi.SetActive(true);
         isRadarActive = true;
@@ -173,6 +172,7 @@ public class InteractionManager : MonoBehaviour
 
     private void DeactivateRadar()
     {
+        Debug.Log("Deactivating Radar");
         radarUi.SetActive(false);
         isRadarActive = false;
         radarActiveNotification.SetActive(false);
@@ -184,6 +184,7 @@ public class InteractionManager : MonoBehaviour
 
     private void SendTargetHeightDeltaUpdate()
     {
+        Debug.Log("Send target height delta update");
         float timeSinceLastUpdate = Time.time - lastTargetHeightDeltaUpdate;
         Debug.Log($"TimeSinceLastUpdate: {timeSinceLastUpdate}");
         if (timeSinceLastUpdate > 0.5)
@@ -198,23 +199,31 @@ public class InteractionManager : MonoBehaviour
 
     private void ActivateSteering()
     {
+        Debug.Log("Activating Steering");
         steeringAvailableNotification.SetActive(false);
         isSteeringActive = true;
-        captain.GetComponent<CaptainMovementController>().captainMovementDeactivated = true;
-        ship.GetComponent<ShipMovementController>().shipMovementDeactivated = false;
         steeringActiveNotification.SetActive(true);
     }
 
 
     private void DeactivateSteering()
     {
+        Debug.Log("Deactivating Steering");
         isSteeringActive = false;
-        captain.GetComponent<CaptainMovementController>().captainMovementDeactivated = false;
-        ship.GetComponent<ShipMovementController>().shipMovementDeactivated = true;
         steeringActiveNotification.SetActive(false);
         if(isSteeringAvailable)
         {
             steeringAvailableNotification.SetActive(true);
         }
+    }
+
+    public bool GetIsSteeringActive()
+    {
+        return isSteeringActive;
+    }
+
+    public bool GetIsRadarActive()
+    {
+        return isRadarActive;
     }
 }
