@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PositionDebug : MonoBehaviour
+public class ShipPositionDebug : MonoBehaviour
 {
     private TextMeshProUGUI label;
     
@@ -18,7 +18,7 @@ public class PositionDebug : MonoBehaviour
     {
         if(NetworkSyncer.Get())
         {
-            label.text = NetworkSyncer.Get().diverPosition.Value.ToString();
+            label.text = NetworkSyncer.Get().shipPosition.Value.ToString();
         }
     }
 }

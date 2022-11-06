@@ -10,16 +10,18 @@ public class CaptainMovementController : MonoBehaviour
 
     private Vector2 movement;
 
+    private InteractionManager interactionManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        interactionManager = GetComponent<InteractionManager>();
     }
 
 
     void Update()
     {
-        if(captainMovementDeactivated)
+        if (interactionManager.GetIsSteeringActive() || interactionManager.GetIsRadarActive())
         {
             return;
         }
@@ -36,7 +38,7 @@ public class CaptainMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (captainMovementDeactivated)
+        if (interactionManager.GetIsSteeringActive() || interactionManager.GetIsRadarActive() || interactionManager.GetIsBookActive())
         {
             return;
         }

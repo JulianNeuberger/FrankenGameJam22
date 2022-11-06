@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class ShipMovementController : MonoBehaviour
 {
-    public bool shipMovementDeactivated = true;
+    public GameObject captain;
+
     public float acceleration;
     public float maxSpeed;
 
     public float currentSpeed;
 
+    private Vector3 simulatedShipPositon = Vector3.zero;
+
+    private InteractionManager interactionManager;
 
     void Start()
     {
@@ -15,19 +19,16 @@ public class ShipMovementController : MonoBehaviour
         {
             NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
         }
+        interactionManager = captain.GetComponent<InteractionManager>();
     }
 
 
     private void Update()
     {
-        if (shipMovementDeactivated)
+        if (!interactionManager.GetIsSteeringActive())
         {
-            Debug.Log("Shipmovement is deactivated");
             return;
         }
-
-        Debug.Log("Shipmovement is ACTIVE");
-
 
         //Compute speed
         var v = Input.GetAxisRaw("Vertical");
@@ -60,12 +61,12 @@ public class ShipMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Move ship
-        transform.Translate(new Vector3(-1, 0, 0) * currentSpeed * Time.deltaTime);
+        //Simulate ship movement
+        simulatedShipPositon += new Vector3(-1, 0, 0) * currentSpeed * Time.deltaTime;
 
         if (NetworkSyncer.Get())
         {
-            NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
+            NetworkSyncer.Get().UpdateShipPositionServerRpc(simulatedShipPositon);
         }
     }
 }

@@ -40,5 +40,7 @@ public class Treasure : Collectible
         
         Destroy(gameObject);
         Destroy(hookInstance.gameObject);
+
+        NetworkSyncer.Get().CollectTreasureServerRpc(transform.position);
     }
 }
