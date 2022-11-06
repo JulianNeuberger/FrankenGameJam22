@@ -3,12 +3,16 @@ using UnityEngine;
 public class MoveState : State
 {
     public float moveSpeed = 3f;
+    public float chargeSpeed = 6f;
     public Vector3 target;
     public float arriveRadius = 7.5f;
     public float maxHeight = 10f;
     public float turnSpeedDegrees = 25f;
     public State idleState;
 
+    [HideInInspector] public bool canCharge = false;
+    [HideInInspector] public float chargeDistance = 10f;
+    
     private float timeout = 30f;
     private Vector3 lastTarget;
     private float timeSinceTargetChange;
@@ -46,7 +50,14 @@ public class MoveState : State
         var angleToTarget = Vector3.SignedAngle(transform.forward, vectorToTarget, Vector3.up);
         angleToTarget *= Mathf.Deg2Rad;
         var moveAmount = Mathf.Clamp(Mathf.Cos(angleToTarget), 0f, 1f);
-        transform.position += transform.forward * (moveSpeed * moveAmount * Time.deltaTime);
+
+        var speed = moveSpeed;
+        if (canCharge && chargeDistance < DistanceToTarget())
+        {
+            speed = chargeSpeed;
+        }
+        
+        transform.position += transform.forward * (speed * moveAmount * Time.deltaTime);
     }
     
     private void UpdateRotation()
@@ -57,8 +68,13 @@ public class MoveState : State
 
     private bool IsAtTarget()
     {
-        var diff = (target - transform.position).magnitude;
+        var diff = DistanceToTarget();
         return diff < arriveRadius;
+    }
+
+    private float DistanceToTarget()
+    {
+        return (target - transform.position).magnitude;
     }
 
     private void OnDrawGizmos()

@@ -5,11 +5,10 @@ using UnityEngine;
 public class IdleState : State
 {
     public Vector3 moveAnchor;
-    public float maxDistanceToMoveAnchor = 25f;
+    public float maxDistanceToMoveAnchor = 15f;
     public float aggroRange = 15f;
     public GameObject player;
     public float stalkDistance = 15f;
-    public float peacefulSeconds = 0f;
 
     public AttackState attackState;
     public MoveState moveState;
@@ -18,55 +17,86 @@ public class IdleState : State
     private bool isStalking;
     private Vector3 spawnPos;
 
+    public float stalkAmountGain = .01f;
+    private float stalkChance = 0.0f;
+    private ToggleFlashlight _flashlight;
+
     // Start is called before the first frame update
     void Start()
     {
+        _flashlight = player.GetComponentInChildren<ToggleFlashlight>();
         moveAnchor = transform.position;
         spawnPos = transform.position;
-        ChooseRandomTarget();
+        ChooseAnchoredTarget();
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        UpdateStalkChance();
+    }
+
     public override State Tick()
     {
-        peacefulSeconds -= Time.deltaTime;
-        
         var distanceToPlayer = (transform.position - player.transform.position).magnitude;
         if (distanceToPlayer < attackState.attackRange)
         {
             return attackState;
         }
 
-        if (distanceToPlayer < aggroRange && peacefulSeconds <= 0)
+        if (distanceToPlayer < aggroRange)
         {
             moveState.target = player.transform.position;
+            moveState.canCharge = true;
             return moveState;
         }
 
-        var shouldStalk = Random.value < 15f;
-        // TODO: only stalk if light is on
-        if (shouldStalk)
-        {
-            moveState.target = ChooseStalkTarget();
-            moveAnchor = moveState.target;
-            isStalking = true;
-        }
-        else
-        {
-            moveState.target = ChooseRandomTarget();
-        }
+        moveState.canCharge = false;
 
         if (isStalking)
         {
-            if (Random.value < .1f)
+            var shouldStopStalking = Random.value > stalkChance;
+            if (shouldStopStalking)
             {
-                // stop stalking
-                moveAnchor = spawnPos;
-                isStalking = false;
+                StopStalking();
+            }
+        }
+        else
+        {
+            // should we start stalking?
+            var shouldStalk = Random.value < stalkChance;
+            if (shouldStalk)
+            {
+                StartStalking();
             }
         }
         
         return moveState;
+    }
+
+    private void StopStalking()
+    {
+        moveState.target = ChooseFarTarget();
+        moveAnchor = moveState.target;
+        isStalking = false;
+    }
+    
+    private void StartStalking()
+    {
+        moveState.target = ChooseStalkTarget();
+        moveAnchor = moveState.target;
+        isStalking = true;
+    }
+
+    private void UpdateStalkChance()
+    {
+        if (_flashlight.IsFlashlightOn())
+        {
+            stalkChance += stalkAmountGain * Time.deltaTime;
+        }
+        else
+        {
+            stalkChance -= stalkAmountGain * Time.deltaTime;
+        }
     }
 
     private Vector3 ChooseStalkTarget()
@@ -82,7 +112,20 @@ public class IdleState : State
         return newTarget;
     }
 
-    private Vector3 ChooseRandomTarget()
+    private Vector3 ChooseFarTarget()
+    {
+        var newTarget = player.transform.position;
+        newTarget += new Vector3(Random.value, Random.value, Random.value) * 25f;
+
+        var terrain = GetClosestCurrentTerrain(newTarget);
+        var terrainHeight = terrain.SampleHeight(newTarget);
+        // offset so we dont crawl at the bottom
+        terrainHeight += 2f;
+        newTarget = new Vector3(newTarget.x, Mathf.Max(terrainHeight, newTarget.y), newTarget.z);
+        return newTarget;
+    }
+
+    private Vector3 ChooseAnchoredTarget()
     {
         Vector3 newTarget;
         var distanceToMoveAnchor = (moveAnchor - transform.position).magnitude;

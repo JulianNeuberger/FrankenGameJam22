@@ -29,6 +29,7 @@ public class DiverMovementController : MonoBehaviour
         UpdateLateralMovement();
         UpdateHeight();
         UpdateRotation();
+        FixUpright();
 
         if (NetworkSyncer.Get())
         {
@@ -41,6 +42,11 @@ public class DiverMovementController : MonoBehaviour
         var rotation = new Vector3(0, turnSpeedDegrees * Time.deltaTime * Input.GetAxis("Horizontal"), 0);
         rotation.y += GetSwayFactor();
         transform.Rotate(rotation);
+    }
+
+    private void FixUpright()
+    {
+        transform.rotation = Quaternion.Euler(0,transform.eulerAngles.y,0);
     }
     
     private void UpdateLateralMovement()
@@ -69,9 +75,7 @@ public class DiverMovementController : MonoBehaviour
 
     private float GetSwayFactor()
     {
-        var ret = Mathf.PerlinNoise(Time.deltaTime * swayScale, 0);
-        ret -= .5f;
-        ret *= 2f;
+        var ret = Mathf.Sin(Time.time * swayScale);
         ret *= swayIntensity;
         return ret;
     }
