@@ -1112,7 +1112,7 @@ Transform:
   m_GameObject: {fileID: 113787908}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: -1}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1290645125}
@@ -1159,8 +1159,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.3254717, g: 1, b: 0.40041932, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 83ab3b83c6467164a977fad571481402, type: 3}
+  m_Color: {r: 0.8066038, g: 1, b: 0.8287062, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1196,7 +1196,7 @@ Transform:
   m_GameObject: {fileID: 114350352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.54, y: 1, z: -1}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1290645125}
@@ -1243,7 +1243,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83ab3b83c6467164a977fad571481402, type: 3}
   m_Color: {r: 0.6462264, g: 1, b: 0.6849961, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1280,7 +1280,7 @@ Transform:
   m_GameObject: {fileID: 131774882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.45, y: 1, z: -1}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1290645125}
@@ -1327,7 +1327,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83ab3b83c6467164a977fad571481402, type: 3}
   m_Color: {r: 0.6462264, g: 1, b: 0.6849961, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4756,13 +4756,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3657e27fb3bf8364e9a33ab7c9ec0300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diverPositionMaxX: 200
-  diverPositionMaxZ: 200
-  radarMaxX: 3
-  radarMaxY: 3
+  realWorldMaxRadarX: 200
+  realWorldMaxRadarZ: 200
+  screenRadarMaxX: 3
+  screenRadarMaxY: 3
   diverRadarMarker: {fileID: 131774882}
   centerMarker: {fileID: 113787908}
   sharkRadarMarker: {fileID: 114350352}
+  treasureMarkerPrefab: {fileID: 8442810217440234360, guid: 22e3d58a13bb418498f560e923e20cfb, type: 3}
 --- !u!114 &1290645127
 MonoBehaviour:
   m_ObjectHideFlags: 0

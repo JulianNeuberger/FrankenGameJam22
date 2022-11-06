@@ -11,7 +11,10 @@ public class ShipMovementController : MonoBehaviour
 
     void Start()
     {
-        NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
+        if (NetworkSyncer.Get())
+        {
+            NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
+        }
     }
 
 

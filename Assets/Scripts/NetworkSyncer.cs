@@ -10,6 +10,7 @@ public class NetworkSyncer : NetworkBehaviour
     public NetworkVariable<float> diverTargetHeight = new();
 
     public NetworkVariable<Vector3> sharkPosition = new();
+    public NetworkList<Vector3> treasurePositions = null;
 
     public NetworkVariable<bool> gameLost = new();
     public NetworkVariable<bool> gameWon = new();
@@ -23,8 +24,19 @@ public class NetworkSyncer : NetworkBehaviour
 
         sharkPosition.Value = Vector3.zero;
 
+        treasurePositions = new NetworkList<Vector3>();
+
+
+
         gameLost.Value = false;
         gameLost.Value = false;
+    }
+
+    private void Start()
+    {
+        //TODO: Remove this when activating treasure functionality
+        AddTreasurePositionServerRpc(new Vector3(40, 20, 100));
+        AddTreasurePositionServerRpc(new Vector3(-30, 0, -30));
     }
 
     public static NetworkSyncer Get()
@@ -50,7 +62,7 @@ public class NetworkSyncer : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void UpdateDiverTargetHeightServerRpc(float newHeight, ServerRpcParams serverRpcParams = default)
     {
-        Debug.Log($"Updating diver target height from {diverTargetHeight.Value} to {newHeight} by client {serverRpcParams.Receive.SenderClientId}");
+        //Debug.Log($"Updating diver target height from {diverTargetHeight.Value} to {newHeight} by client {serverRpcParams.Receive.SenderClientId}");
         diverTargetHeight.Value = newHeight;
     }
 
@@ -61,6 +73,18 @@ public class NetworkSyncer : NetworkBehaviour
     {
         //Debug.Log($"Updating shark position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
         sharkPosition.Value = newPosition;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddTreasurePositionServerRpc(Vector3 treasurePosition, ServerRpcParams serverRpcParams = default)
+    {
+        treasurePositions.Add(treasurePosition);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RemoveTreasurePositionServerRpc(Vector3 treasurePosition, ServerRpcParams serverRpcParams = default)
+    {
+        treasurePositions.Remove(treasurePosition);
     }
 
 
