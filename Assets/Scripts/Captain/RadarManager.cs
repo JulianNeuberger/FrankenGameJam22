@@ -18,6 +18,8 @@ public class RadarManager : MonoBehaviour
 
     private Dictionary<Vector3, GameObject> existingTreasureRadarMarkers;
 
+    private Vector3 simulatedShipPosition =  Vector3.zero;
+
     void Start()
     {
         existingTreasureRadarMarkers = new Dictionary<Vector3, GameObject>();
@@ -26,6 +28,11 @@ public class RadarManager : MonoBehaviour
 
     void Update()
     {
+        if (NetworkSyncer.Get())
+        {
+            simulatedShipPosition = NetworkSyncer.Get().shipPosition.Value;
+        }
+
         UpdateDiverMarker();
         UpdateSharkMarker();
         UpdateTreasureMarkers();
@@ -41,15 +48,13 @@ public class RadarManager : MonoBehaviour
 
             Vector3 diverPosition = NetworkSyncer.Get().diverPosition.Value;
 
-            //map diverPosition in 3D to diverRadarPosition in 2D (mapping 3D z-axis to 2D y-axis and scaling to radar screen)
-            float absoluteDiverRadarX = diverPosition.x / realWorldMaxRadarX * screenRadarMaxX;
-            float absoluteDiverRadarY = diverPosition.z / realWorldMaxRadarZ * screenRadarMaxY;
+            Vector2 diverRadarPosition = MapRealPositionToRadarPosition(diverPosition);
 
             //restrict to radar size on screen (showing at the edge if outside)
-            absoluteDiverRadarX = Mathf.Clamp(absoluteDiverRadarX, -screenRadarMaxX, screenRadarMaxX);
-            absoluteDiverRadarY = Mathf.Clamp(absoluteDiverRadarY, -screenRadarMaxY, screenRadarMaxY);
+            var absoluteDiverRadarX = Mathf.Clamp(diverRadarPosition.x, -screenRadarMaxX, screenRadarMaxX);
+            var absoluteDiverRadarY = Mathf.Clamp(diverRadarPosition.y, -screenRadarMaxY, screenRadarMaxY);
 
-            //set relative to center of the radar to compensate radar movement in worldspace
+            //set relative to center of the radar to compensate radar placement in worldspace
             var relativeDiverRadarX = centerMarker.transform.position.x + absoluteDiverRadarX;
             var relativeDiverRadarY = centerMarker.transform.position.y + absoluteDiverRadarY;
 
@@ -70,26 +75,25 @@ public class RadarManager : MonoBehaviour
 
             Vector3 sharkPosition = NetworkSyncer.Get().sharkPosition.Value;
 
-            Debug.Log("SharkPosition:" + sharkPosition);
-
-            //map sharkPosition in 3D to sharkRadarPosition in 2D (mapping 3D z-axis to 2D y-axis and scaling to radar screen)
-            float absoluteSharkRadarX = sharkPosition.x / realWorldMaxRadarX * screenRadarMaxX;
-            float absoluteSharkRadarY = sharkPosition.z / realWorldMaxRadarZ * screenRadarMaxY;
+            Vector2 sharkRadarPosition = MapRealPositionToRadarPosition(sharkPosition);
 
             //restrict to radar size on screen (not showing if outside)
-            if (absoluteSharkRadarX > screenRadarMaxX || 
-                absoluteSharkRadarY > screenRadarMaxY ||
-                absoluteSharkRadarX < -screenRadarMaxX ||
-                absoluteSharkRadarY < -screenRadarMaxY)
+            if (sharkRadarPosition.x > screenRadarMaxX ||
+                sharkRadarPosition.y > screenRadarMaxY ||
+                sharkRadarPosition.x < -screenRadarMaxX ||
+                sharkRadarPosition.y < -screenRadarMaxY)
             {
                 sharkRadarMarker.SetActive(false);
             }
+            else
+            {
+                //set relative to center of the radar to compensate radar placement in worldspace
+                var relativeSharkRadarX = centerMarker.transform.position.x + sharkRadarPosition.x;
+                var relativeSharkRadarY = centerMarker.transform.position.y + sharkRadarPosition.y;
 
-            //set relative to center of the radar to compensate radar movement in worldspace
-            var relativeSharkRadarX = centerMarker.transform.position.x + absoluteSharkRadarX;
-            var relativeSharkRadarY = centerMarker.transform.position.y + absoluteSharkRadarY;
+                sharkRadarMarker.transform.position = new Vector3(relativeSharkRadarX, relativeSharkRadarY, sharkRadarMarker.transform.position.z);
+            }
 
-            sharkRadarMarker.transform.position = new Vector3(relativeSharkRadarX, relativeSharkRadarY, sharkRadarMarker.transform.position.z);
         }
         else
         {
@@ -104,7 +108,11 @@ public class RadarManager : MonoBehaviour
             var newTreasurePositions = new List<Vector3>();
             foreach(var newTreasurePosition in NetworkSyncer.Get().treasurePositions)
             {
-                if(!existingTreasureRadarMarkers.ContainsKey(newTreasurePosition))
+                if(existingTreasureRadarMarkers.ContainsKey(newTreasurePosition))
+                {
+                    UpdateTreasureMarker(newTreasurePosition);
+                }
+                else                        
                 {
                     AddTreasureMarker(newTreasurePosition);
                 }
@@ -132,15 +140,14 @@ public class RadarManager : MonoBehaviour
 
     void AddTreasureMarker(Vector3 treasurePosition)
     {
-        //map treasurePosition in 3D to treasureRadarPosition in 2D (mapping 3D z-axis to 2D y-axis and scaling to radar screen)
-        float absoluteTreasureRadarX = treasurePosition.x / realWorldMaxRadarX * screenRadarMaxX;
-        float absoluteTreasureRadarY = treasurePosition.z / realWorldMaxRadarZ * screenRadarMaxY;
+        Debug.Log($"Adding treasure marker {treasurePosition}");
+        Vector2 treasureRadarPosition = MapRealPositionToRadarPosition(treasurePosition);
 
         //restrict to radar size on screen (showing at the edge if outside)
-        absoluteTreasureRadarX = Mathf.Clamp(absoluteTreasureRadarX, -screenRadarMaxX, screenRadarMaxX);
-        absoluteTreasureRadarY = Mathf.Clamp(absoluteTreasureRadarY, -screenRadarMaxY, screenRadarMaxY);
+        var absoluteTreasureRadarX = Mathf.Clamp(treasureRadarPosition.x, -screenRadarMaxX, screenRadarMaxX);
+        var absoluteTreasureRadarY = Mathf.Clamp(treasureRadarPosition.y, -screenRadarMaxY, screenRadarMaxY);
 
-        //set relative to center of the radar to compensate radar movement in worldspace
+        //set relative to center of the radar to compensate radar placement in worldspace
         var relativeTreasureRadarX = centerMarker.transform.position.x + absoluteTreasureRadarX;
         var relativeTreasureRadarY = centerMarker.transform.position.y + absoluteTreasureRadarY;
 
@@ -149,5 +156,40 @@ public class RadarManager : MonoBehaviour
         var treasureRadarMarker = Instantiate(treasureMarkerPrefab, relativeTreasureRadarPosition, Quaternion.identity, transform);
 
         existingTreasureRadarMarkers.Add(treasurePosition, treasureRadarMarker);
+    }
+
+    void UpdateTreasureMarker(Vector3 treasurePosition)
+    {
+        Debug.Log($"Updating treasure marker {treasurePosition}");
+        var existingMarker = existingTreasureRadarMarkers[treasurePosition];
+
+        Vector2 treasureRadarPosition = MapRealPositionToRadarPosition(treasurePosition);
+
+        //restrict to radar size on screen (showing at the edge if outside)
+        var absoluteTreasureRadarX = Mathf.Clamp(treasureRadarPosition.x, -screenRadarMaxX, screenRadarMaxX);
+        var absoluteTreasureRadarY = Mathf.Clamp(treasureRadarPosition.y, -screenRadarMaxY, screenRadarMaxY);
+
+        //set relative to center of the radar to compensate radar placement in worldspace
+        var relativeTreasureRadarX = centerMarker.transform.position.x + absoluteTreasureRadarX;
+        var relativeTreasureRadarY = centerMarker.transform.position.y + absoluteTreasureRadarY;
+
+        var relativeTreasureRadarPosition = new Vector3(relativeTreasureRadarX, relativeTreasureRadarY, diverRadarMarker.transform.position.z);
+
+        existingMarker.transform.position = relativeTreasureRadarPosition;
+    }
+
+
+
+    private Vector2 MapRealPositionToRadarPosition(Vector3 realPosition)
+    {
+        //compute real world position relative to ship position
+        var relativeX = realPosition.x - simulatedShipPosition.x;
+        var relativeZ = realPosition.z - simulatedShipPosition.z;
+
+        //map 3D world to 2D radar (mapping 3D z-axis to 2D y-axis and scaling to radar screen)
+        float radarX = relativeX / realWorldMaxRadarX * screenRadarMaxX;
+        float radarY = relativeZ / realWorldMaxRadarZ * screenRadarMaxY;
+
+        return new Vector2(radarX, radarY);
     }
 }

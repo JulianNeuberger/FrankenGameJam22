@@ -2705,7 +2705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &481109618
 Transform:
   m_ObjectHideFlags: 0
@@ -5059,7 +5059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e912febe304304ab71d4bbd3821373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipMovementDeactivated: 1
+  captain: {fileID: 1979739325}
   acceleration: 0.5
   maxSpeed: 2
   currentSpeed: 0
@@ -5129,10 +5129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3657e27fb3bf8364e9a33ab7c9ec0300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realWorldMaxRadarX: 200
-  realWorldMaxRadarZ: 200
-  screenRadarMaxX: 3
-  screenRadarMaxY: 3
+  realWorldMaxRadarX: 300
+  realWorldMaxRadarZ: 300
+  screenRadarMaxX: 4
+  screenRadarMaxY: 4
   diverRadarMarker: {fileID: 131774882}
   centerMarker: {fileID: 113787908}
   sharkRadarMarker: {fileID: 114350352}
@@ -7932,8 +7932,6 @@ MonoBehaviour:
   steeringArea: {fileID: 558268217}
   steeringAvailableNotification: {fileID: 1153486365}
   steeringActiveNotification: {fileID: 1601619947}
-  ship: {fileID: 1282018736}
-  captain: {fileID: 1979739325}
 --- !u!95 &1979739332
 Animator:
   serializedVersion: 4

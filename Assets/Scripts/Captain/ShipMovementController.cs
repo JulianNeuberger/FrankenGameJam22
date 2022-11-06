@@ -9,6 +9,8 @@ public class ShipMovementController : MonoBehaviour
 
     public float currentSpeed;
 
+    private Vector3 simulatedShipPositon = Vector3.zero;
+
     private InteractionManager interactionManager;
 
     void Start()
@@ -59,17 +61,12 @@ public class ShipMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!interactionManager.GetIsSteeringActive())
-        {
-            return;
-        }
-
-        //Move ship
-        transform.Translate(new Vector3(-1, 0, 0) * currentSpeed * Time.deltaTime);
+        //Simulate ship movement
+        simulatedShipPositon += new Vector3(-1, 0, 0) * currentSpeed * Time.deltaTime;
 
         if (NetworkSyncer.Get())
         {
-            NetworkSyncer.Get().UpdateShipPositionServerRpc(transform.position);
+            NetworkSyncer.Get().UpdateShipPositionServerRpc(simulatedShipPositon);
         }
     }
 }
