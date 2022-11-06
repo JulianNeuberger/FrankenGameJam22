@@ -32,6 +32,15 @@ public class RadarManager : MonoBehaviour
 
             absoluteDiverRadarX = diverPosition.x / diverPositionMaxX * radarMaxX;
             absoluteDiverRadarY = diverPosition.z / diverPositionMaxZ * radarMaxY;
+
+            if(absoluteDiverRadarX > radarMaxX)
+            {
+                absoluteDiverRadarX = radarMaxX;
+            }
+            if(absoluteDiverRadarY > radarMaxY)
+            {
+                absoluteDiverRadarY = radarMaxY;
+            }
         }
 
         var relativeDiverRadarX = centerMarker.transform.position.x + absoluteDiverRadarX;

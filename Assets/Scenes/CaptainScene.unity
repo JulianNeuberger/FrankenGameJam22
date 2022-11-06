@@ -4670,10 +4670,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3657e27fb3bf8364e9a33ab7c9ec0300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diverPositionMaxX: 500
-  diverPositionMaxZ: 500
-  radarMaxX: 5
-  radarMaxY: 5
+  diverPositionMaxX: 200
+  diverPositionMaxZ: 200
+  radarMaxX: 3
+  radarMaxY: 3
   diverRadarMarker: {fileID: 131774882}
   centerMarker: {fileID: 113787908}
 --- !u!114 &1290645127
@@ -6986,7 +6986,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   captainMovementDeactivated: 0
   movementSpeed: 3
-  turnSpeed: 300
   animator: {fileID: 1979739332}
 --- !u!114 &1979739331
 MonoBehaviour:

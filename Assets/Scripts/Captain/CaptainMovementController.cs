@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CaptainMovementController : MonoBehaviour
 {
     public bool captainMovementDeactivated = false;
     public float movementSpeed;
-    public float turnSpeed;
-    private float horizontalInput;
-    private float verticalInput;
-
 
     public Animator animator;
     private Rigidbody2D rb;
