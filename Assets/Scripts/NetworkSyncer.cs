@@ -5,17 +5,24 @@ public class NetworkSyncer : NetworkBehaviour
 {
     private static NetworkSyncer inst;
 
-    public NetworkVariable<Vector3> diverPosition = new();
     public NetworkVariable<Vector3> shipPosition = new();
+    public NetworkVariable<Vector3> diverPosition = new();
     public NetworkVariable<float> diverTargetHeight = new();
+
+    public NetworkVariable<Vector3> sharkPosition = new();
+
     public NetworkVariable<bool> gameLost = new();
     public NetworkVariable<bool> gameWon = new();
 
     private void Awake()
     {
         inst = this;
-        diverPosition.Value = Vector3.zero;
         shipPosition.Value = Vector3.zero;
+        diverPosition.Value = Vector3.zero;
+        diverTargetHeight.Value = 0f;
+
+        sharkPosition.Value = Vector3.zero;
+
         gameLost.Value = false;
         gameLost.Value = false;
     }
@@ -23,6 +30,14 @@ public class NetworkSyncer : NetworkBehaviour
     public static NetworkSyncer Get()
     {
         return inst;
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateShipPositionServerRpc(Vector3 newPosition, ServerRpcParams serverRpcParams = default)
+    {
+        //Debug.Log($"Updating diver position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
+        shipPosition.Value = newPosition;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -33,19 +48,21 @@ public class NetworkSyncer : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void UpdateShipPositionServerRpc(Vector3 newPosition, ServerRpcParams serverRpcParams = default)
-    {
-        //Debug.Log($"Updating diver position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
-        shipPosition.Value = newPosition;
-    }
-
-
-    [ServerRpc(RequireOwnership = false)]
     public void UpdateDiverTargetHeightServerRpc(float newHeight, ServerRpcParams serverRpcParams = default)
     {
         Debug.Log($"Updating diver target height from {diverTargetHeight.Value} to {newHeight} by client {serverRpcParams.Receive.SenderClientId}");
         diverTargetHeight.Value = newHeight;
     }
+
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateSharkPositionServerRpc(Vector3 newPosition, ServerRpcParams serverRpcParams = default)
+    {
+        //Debug.Log($"Updating shark position from {diverPosition.Value} to {newPosition} by client {serverRpcParams.Receive.SenderClientId}");
+        sharkPosition.Value = newPosition;
+    }
+
 
 
     [ServerRpc(RequireOwnership = false)]
