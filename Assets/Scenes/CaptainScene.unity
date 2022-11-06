@@ -1096,6 +1096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 113787909}
   - component: {fileID: 113787910}
+  - component: {fileID: 113787911}
   m_Layer: 0
   m_Name: CenterMarker
   m_TagString: Untagged
@@ -1170,6 +1171,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &113787911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113787908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0420a20b368533644b1f7ae0ac553fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkSpeed: 1
 --- !u!1 &114350352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,6 +1194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 114350353}
   - component: {fileID: 114350354}
+  - component: {fileID: 114350355}
   m_Layer: 0
   m_Name: SharkMarker
   m_TagString: Untagged
@@ -1254,6 +1269,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &114350355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114350352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0420a20b368533644b1f7ae0ac553fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkSpeed: 1
 --- !u!1 &131774882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 131774883}
   - component: {fileID: 131774884}
+  - component: {fileID: 131774885}
   m_Layer: 0
   m_Name: DiverMarker
   m_TagString: Untagged
@@ -1338,6 +1367,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &131774885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131774882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0420a20b368533644b1f7ae0ac553fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkSpeed: 1
 --- !u!1 &132497887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4763,7 +4805,7 @@ MonoBehaviour:
   diverRadarMarker: {fileID: 131774882}
   centerMarker: {fileID: 113787908}
   sharkRadarMarker: {fileID: 114350352}
-  treasureMarkerPrefab: {fileID: 8442810217440234360, guid: 22e3d58a13bb418498f560e923e20cfb, type: 3}
+  treasureMarkerPrefab: {fileID: 3087518974536598361, guid: 22e3d58a13bb418498f560e923e20cfb, type: 3}
 --- !u!114 &1290645127
 MonoBehaviour:
   m_ObjectHideFlags: 0

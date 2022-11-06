@@ -16,11 +16,11 @@ public class RadarManager : MonoBehaviour
 
     public GameObject treasureMarkerPrefab;
 
-    private List<GameObject> treasureRadarMarkers;
+    private Dictionary<Vector3, GameObject> existingTreasureRadarMarkers;
 
     void Start()
     {
-        treasureRadarMarkers = new List<GameObject>();
+        existingTreasureRadarMarkers = new Dictionary<Vector3, GameObject>();
     }
 
 
@@ -99,17 +99,33 @@ public class RadarManager : MonoBehaviour
 
     void UpdateTreasureMarkers()
     {
-        foreach (var treasureRadarMarker in treasureRadarMarkers)
-        {
-            Destroy(treasureRadarMarker);
-        }
-
         if (NetworkSyncer.Get())
         {
-            foreach(var treasurePosition in NetworkSyncer.Get().treasurePositions)
+            var newTreasurePositions = new List<Vector3>();
+            foreach(var newTreasurePosition in NetworkSyncer.Get().treasurePositions)
             {
-                AddTreasureMarker(treasurePosition);
+                if(!existingTreasureRadarMarkers.ContainsKey(newTreasurePosition))
+                {
+                    AddTreasureMarker(newTreasurePosition);
+                }
+                newTreasurePositions.Add(newTreasurePosition);
             }
+            foreach(var existingTreasurePosition in existingTreasureRadarMarkers.Keys)
+            {
+                if(!newTreasurePositions.Contains(existingTreasurePosition))
+                {
+                    Destroy(existingTreasureRadarMarkers[existingTreasurePosition]);
+                }
+            }
+
+        }
+        else
+        {
+            foreach (var treasureRadarMarker in existingTreasureRadarMarkers.Values)
+            {
+                Destroy(treasureRadarMarker);
+            }
+            existingTreasureRadarMarkers.Clear();
         }
     }
 
@@ -130,7 +146,8 @@ public class RadarManager : MonoBehaviour
 
         var relativeTreasureRadarPosition = new Vector3(relativeTreasureRadarX, relativeTreasureRadarY, diverRadarMarker.transform.position.z);
         
-        var treasureRadarMarker = Instantiate(treasureMarkerPrefab, relativeTreasureRadarPosition, Quaternion.identity);
-        treasureRadarMarkers.Add(treasureRadarMarker);
+        var treasureRadarMarker = Instantiate(treasureMarkerPrefab, relativeTreasureRadarPosition, Quaternion.identity, transform);
+
+        existingTreasureRadarMarkers.Add(treasurePosition, treasureRadarMarker);
     }
 }
