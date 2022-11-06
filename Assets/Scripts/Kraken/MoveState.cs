@@ -4,6 +4,7 @@ public class MoveState : State
 {
     public float moveSpeed = 3f;
     public Vector3 target;
+    public float arriveRadius = 7.5f;
     public float maxHeight = 10f;
     public float turnSpeedDegrees = 25f;
     public State idleState;
@@ -16,6 +17,8 @@ public class MoveState : State
     {
         UpdateRotation();
         UpdatePosition();
+
+        timeSinceTargetChange += Time.deltaTime;
         
         if (lastTarget != target)
         {
@@ -25,6 +28,7 @@ public class MoveState : State
 
         if (timeSinceTargetChange > timeout)
         {
+            timeSinceTargetChange = 0f;
             return idleState;
         }
 
@@ -54,12 +58,17 @@ public class MoveState : State
     private bool IsAtTarget()
     {
         var diff = (target - transform.position).magnitude;
-        var radius = 6f;
-        return diff < radius;
+        return diff < arriveRadius;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(target, 1f);
+    }
+
+    public override string Description()
+    {
+        var distance = target - transform.position;
+        return distance.magnitude.ToString();
     }
 }
