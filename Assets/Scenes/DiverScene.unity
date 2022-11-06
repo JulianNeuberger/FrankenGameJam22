@@ -324,6 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   target: {x: 0, y: 0, z: 0}
+  arriveRadius: 7.5
   maxHeight: 10
   turnSpeedDegrees: 25
   idleState: {fileID: 1537760106}
@@ -340,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 340726070833236000}
-  attackRange: 1
+  attackRange: 4.5
   idleState: {fileID: 1537760106}
 --- !u!114 &1537760110
 MonoBehaviour:

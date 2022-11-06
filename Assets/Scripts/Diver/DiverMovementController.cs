@@ -18,7 +18,10 @@ public class DiverMovementController : MonoBehaviour
     
     private void Start()
     {
-        NetworkSyncer.Get().UpdateDiverTargetHeightServerRpc(transform.position.y);
+        if (NetworkSyncer.Get())
+        {
+            NetworkSyncer.Get().UpdateDiverPositionServerRpc(transform.position);
+        }
     }
     
     private void Update()
@@ -45,6 +48,11 @@ public class DiverMovementController : MonoBehaviour
         transform.position += transform.forward * (forwardSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
         //transform.position -= transform.right * GetSwayFactor();
 
+        if (!NetworkSyncer.Get())
+        {
+            return;
+        }
+        
         var shipPosition = NetworkSyncer.Get().shipPosition.Value;
         var vectorToShipWithoutHeight = new Vector3(shipPosition.x - transform.position.x, 0, shipPosition.z - transform.position.z);
         var distanceToShipWithoutHeight = vectorToShipWithoutHeight.magnitude;

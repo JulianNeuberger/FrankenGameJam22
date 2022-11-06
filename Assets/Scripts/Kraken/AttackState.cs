@@ -4,9 +4,9 @@ using UnityEngine;
 public class AttackState : State
 {
     public GameObject player;
-    public float attackRange = 1f;
+    public float attackRange = 4.5f;
     public IdleState idleState;
-
+    
     public override State Tick()
     {
         var distanceToPlayer = (transform.position - player.transform.position).magnitude;
@@ -14,8 +14,16 @@ public class AttackState : State
         {
             return idleState;
         }
-        Debug.Log("Attacking!");
-        // TODO: deaggro with some probability
+        
+        Debug.Log("Dead!");
+        NetworkSyncer.Get().SetGameToLostServerRpc();
+        
         return this;
+    }
+
+    public override string Description()
+    {
+        var distanceToPlayer = (transform.position - player.transform.position).magnitude;
+        return distanceToPlayer.ToString();
     }
 }
