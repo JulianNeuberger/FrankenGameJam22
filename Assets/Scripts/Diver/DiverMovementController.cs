@@ -96,6 +96,9 @@ public class DiverMovementController : MonoBehaviour
 
         var pos = transform.position;
         pos.y += changeInHeight;
+
+        pos.y = Mathf.Max(pos.y, Terrain.activeTerrain.SampleHeight(pos));
+        
         transform.position = pos;
     }
 }
