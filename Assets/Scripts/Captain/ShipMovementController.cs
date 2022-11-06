@@ -3,6 +3,7 @@ using UnityEngine;
 public class ShipMovementController : MonoBehaviour
 {
     public GameObject captain;
+    public Animator shipWaveAnimator;
 
     public float acceleration;
     public float maxSpeed;
@@ -56,6 +57,8 @@ public class ShipMovementController : MonoBehaviour
                 currentSpeed = newCurrentSpeed;
             }
         }
+
+        shipWaveAnimator.SetFloat("Speed", currentSpeed);
 
     }
 
